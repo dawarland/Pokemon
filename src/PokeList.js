@@ -5,10 +5,8 @@ class PokeList extends React.Component {
         return (
             <ul className="nav">
                 {this.props.list.map(
-                    (item) =>
-                        <li value={item.url} onClick={this.props.handleClick}>
-                            {item.name}
-                        </li>
+                    (item, index) =>
+                        <li><a href={item.url}  onClick={this.props.handleClick} >{item.name}</a></li>
                 )}
             </ul>
         );

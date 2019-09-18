@@ -2,6 +2,13 @@ import React from 'react';
 import './App.css';
 
 class PokeResult extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            typeList: []
+        }
+    }
+
     render() {
         return (this.props.pokemon)
             ? (<section>
@@ -19,7 +26,7 @@ class PokeResult extends React.Component {
                     </ul>
                 </div>
                 <div>
-                    <h2>Base Stat</h2>
+                    <h2>Base Stats</h2>
                         {this.props.pokemon.stats.map(
                             (item) =>
                                 <div>
@@ -33,21 +40,15 @@ class PokeResult extends React.Component {
                 {this.props.pokemon.types.map(
                     (item) =>
                         <div>
-                            <h2>Average {item.type["name"]} Stat</h2>
-                            {this.props.pokemon.stats.map(
-                                (item) =>
-                                    <div>
-                                        <span>{item["base_stat"]}</span>
-                                        <span>{item.stat["name"]}</span>
-                                        <div style={{width: item["base_stat"] + 'px',
-                                            border: '1px solid black'}} ></div>
-                                    </div>
-                            )}
+                            <h2>Average {item.type["name"]} Stats</h2>
+                            <p>url des type :{item.type["url"]
+                            }</p>
+                            <p>pokemon du meme type:</p>
                         </div>
                 )}
             </section>
             )
-            : ( <section>vide</section>);
+            : ( <section>Vide</section>);
     }
 }
 

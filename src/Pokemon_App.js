@@ -11,10 +11,32 @@ class Pokemon_App extends React.Component {
         this.state = {
             changedSearch: '',
             listPoke: [],
-            pokemonResult: [],
+            pokemonResult: '',
+            pokemonTypesResult: [],
             allPokemon: PokeData,
             isLoad: false
         };
+        this.NBTYPES=12; //Nombre de type dans pokemon
+    }
+
+    componentDidMount() {
+        for(var i=1; i< this.NBTYPES; i++) {
+            fetch("https://pokeapi.co/api/v2/type/"+i)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState(state => ({add: result}),
+                            () => { (this.state.pokemonTypesResult[i]=result ) });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                );
+        }
+        this.state.pokemonTypesResult.map( (item) => console.log(item) )
     }
 
     handleChange = (event) => {
@@ -28,15 +50,13 @@ class Pokemon_App extends React.Component {
     };
 
     handleClick = (event) => {
-        var value = event.target.value;
-        console.log("clique sur " + event.target.value);
-        //this.setState(state => ({ pokemon: value })  );
-        //fetch(value)
-        fetch("https://pokeapi.co/api/v2/pokemon/10084/")
+        const {href} = event.target;
+        console.log("clique sur " + href);
+        fetch(href)
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState(state => ({pokemon:result}) );
+                    this.setState(state => ({pokemonResult:result}) );
                 },
                 (error) => {
                     this.setState({
@@ -45,7 +65,6 @@ class Pokemon_App extends React.Component {
                     });
                 }
             );
-        //createPokemon(value);
         event.preventDefault();
     };
 
@@ -54,7 +73,7 @@ class Pokemon_App extends React.Component {
             <div className="margin">
                 <PokeFormSearch word={this.state.changedSearch} handleChange={this.handleChange}/>
                 <PokeList list={this.state.listPoke} handleClick={this.handleClick}/>
-                <PokeResult pokemon={this.state.pokemon} />
+                <PokeResult pokemon={this.state.pokemonResult} pokemonType={this.state.pokemonTypesResult} />
             </div>
         );
     }
