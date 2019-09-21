@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
           <div className="red"></div>
-        <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <div className="white"></div>
       </header>
     <Pokemon_App />
