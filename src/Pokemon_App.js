@@ -98,12 +98,13 @@ class Pokemon_App extends React.Component {
 
     handleChange = (event) => {
         const {name, value} = event.target;
-        this.setState(({ [name]: value })  );
+        this.setState(({ [name]: value }), () => {
+            if(this.state.changedSearch.length >= 2){
+                var newItems = PokeData.filter( suggestion => suggestion.name.includes(this.state.changedSearch));
+                this.setState(state => ({ listPoke: newItems } ));
+            }
+        }  );
 
-        if(this.state.changedSearch.length >= 2){
-            var newItems = PokeData.filter( suggestion => suggestion.name.includes(this.state.changedSearch));
-            this.setState(state => ({ listPoke: newItems } ));
-        }
     };
 
     handleClick = (event) => {
